@@ -3,7 +3,11 @@ package com.example.allan.manager;
 /**
  * Created by allan on 10/09/16.
  */
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.InetAddress;
@@ -55,9 +59,15 @@ public class Server {
                     // Socket object
                     Socket socket = serverSocket.accept();
                     count++;
+                    BufferedReader in = new  BufferedReader( new InputStreamReader(socket.getInputStream()));
+                    System.out.println("Aqui!!!");
+                    System.out.println(in.readLine());
+
+
                     message += "#" + count + " from "
                             + socket.getInetAddress() + ":"
-                            + socket.getPort() + "\n";
+                            + socket.getPort() +" "+"\n";
+
 
                     activity.runOnUiThread(new Runnable() {
                         @Override
@@ -93,10 +103,11 @@ public class Server {
             OutputStream outputStream;
             String msgReply = "Hello from Server, you are #" + cnt;
 
+
             try {
                 outputStream = hostThreadSocket.getOutputStream();
                 PrintStream printStream = new PrintStream(outputStream);
-                printStream.print(msgReply);
+                printStream.print("...");
                 printStream.close();
 
                 message += "replayed: " + msgReply + "\n";
